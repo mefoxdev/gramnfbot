@@ -1,0 +1,23 @@
+package rule
+
+import (
+	"app/internal/info"
+
+	"github.com/mymmrac/telego"
+)
+
+func IsDirect(chat telego.Chat) bool {
+	return chat.Type == telego.ChatTypePrivate
+}
+
+// var ErrNotFoss = errors.New("this chat is not meNFoss")
+
+func IsFoss(chatID int64) bool {
+	return info.Foss.ID == chatID
+}
+
+// var ErrNotFozz = errors.New("this chat is not meNFozz")
+
+func IsFozz(chatID int64) bool {
+	return info.Fozz.ID == chatID
+}

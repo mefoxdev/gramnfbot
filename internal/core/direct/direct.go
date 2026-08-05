@@ -1,8 +1,7 @@
 package direct
 
 import (
-	"app/internal/rule"
-
+	"github.com/mefoxtrot/meNFlubot/internal/rule"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 	tu "github.com/mymmrac/telego/telegoutil"

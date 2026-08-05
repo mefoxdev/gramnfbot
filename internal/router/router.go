@@ -1,10 +1,10 @@
 package router
 
 import (
-	"app/internal/core/direct"
-	"app/internal/core/group"
 	"context"
 
+	"github.com/mefoxtrot/meNFlubot/internal/core/direct"
+	"github.com/mefoxtrot/meNFlubot/internal/core/group"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 )

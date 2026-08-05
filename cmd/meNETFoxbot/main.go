@@ -1,12 +1,12 @@
 package main
 
 import (
-	"app/internal/router"
 	"context"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/mefoxtrot/meNFlubot/internal/router"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 )

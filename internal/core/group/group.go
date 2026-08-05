@@ -1,11 +1,12 @@
 package group
 
 import (
-	"app/internal/info"
-	"app/internal/rule"
 	"fmt"
+	"html"
 	"log/slog"
 
+	"github.com/mefoxtrot/meNFlubot/internal/info"
+	"github.com/mefoxtrot/meNFlubot/internal/rule"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 	tu "github.com/mymmrac/telego/telegoutil"
@@ -30,26 +31,32 @@ func HandleRules(ctx *th.Context, message telego.Message) error {
 }
 
 func HandleJoin(ctx *th.Context, update telego.ChatMemberUpdated) error {
+	wasMember := update.OldChatMember.MemberIsMember()
+	isMember := update.NewChatMember.MemberIsMember()
+
+	user := update.NewChatMember.MemberUser()
+	chatTitle := html.EscapeString(update.Chat.Title)
+
+	mention := fmt.Sprintf(
+		`<a href="tg://user?id=%d">%s</a>`,
+		user.ID,
+		html.EscapeString(user.FirstName),
+	)
 	text := fmt.Sprintf(`
-добро пожаловать в %s, %s!
-советую прочитать правила, прежде чем начать общение 
-для этого есть команда /rules 
-удачного времяпровождения ^^
+Добро пожаловать в %s, %s!
+прочитай правила, и можешь начать общаться ^^
+для этого введи /rules
 	`,
-		update.Chat.FirstName, update.From.FirstName)
+		chatTitle, mention)
 
 	params := tu.Message(
 		tu.ID(update.Chat.ID),
 		text,
-	)
-	wasMember := update.OldChatMember.MemberIsMember()
-	isMember := update.NewChatMember.MemberIsMember()
+	).WithParseMode(telego.ModeHTML)
 
 	if wasMember || !isMember {
 		return nil
 	}
-
-	user := update.NewChatMember.MemberUser()
 
 	// logs
 	slog.Info("user joined chat",
@@ -57,22 +64,6 @@ func HandleJoin(ctx *th.Context, update telego.ChatMemberUpdated) error {
 		"user_id", user.ID,
 		"username", "@"+user.Username,
 	)
-
-	if rule.IsFozz(update.Chat.ID) {
-		text = "+++"
-		params.MessageThreadID = info.Fozz.TMainID
-		params.Text = text
-	} else if rule.IsFoss(update.Chat.ID) {
-		text = fmt.Sprintf(`
-Добро пожаловать в meNFoss, %s ^^
-это чат для общения, привязанный к meNFlux
-почитай правила и можешь начинать общатся
-		`, update.NewChatMember.MemberUser().FirstName)
-		params.Text = text
-	} else {
-		text = "---"
-		params.Text = text
-	}
 
 	_, err := ctx.Bot().SendMessage(ctx, params)
 

@@ -5,8 +5,8 @@ import (
 	"github.com/mymmrac/telego"
 )
 
-func IsDirect(chat telego.Chat) bool {
-	return chat.Type == telego.ChatTypePrivate
+func IsDirect(chatType string) bool {
+	return chatType == telego.ChatTypePrivate
 }
 
 // var ErrNotFoss = errors.New("this chat is not meNFoss")

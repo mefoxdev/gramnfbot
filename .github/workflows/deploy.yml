@@ -40,8 +40,8 @@ jobs:
     steps:
       - name: Setup SSH
         env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_HOST: ${{ vars.SERVER_HOST }}
+          SERVER_SSH_KEY: ${{ secrets.OVH_VPS_1 }}
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh

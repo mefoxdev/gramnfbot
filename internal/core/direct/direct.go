@@ -2,6 +2,7 @@ package direct
 
 import (
 	"github.com/mefoxtrot/meNFlubot/internal/rule"
+	"github.com/mefoxtrot/meNFlubot/internal/show"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 	tu "github.com/mymmrac/telego/telegoutil"
@@ -14,7 +15,7 @@ func HandleStart(ctx *th.Context, message telego.Message) error {
 			tu.Message(
 				tu.ID(message.Chat.ID),
 				"Привет! это бот созданный netfox.me.\nон нужен для модерации в чатах meNFozz(ss), авторизации в наших продуктах и оплаты подписки",
-			),
+			).WithReplyMarkup(show.Profile()),
 		)
 		return err
 	}

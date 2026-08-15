@@ -1,17 +1,22 @@
 package show
 
 import (
+	"context"
+
 	"github.com/mymmrac/telego"
-	tu "github.com/mymmrac/telego/telegoutil"
 )
 
 const profileURL = "https://netfox.me/profile"
 
-func Profile() *telego.InlineKeyboardMarkup {
-	return tu.InlineKeyboard(
-		tu.InlineKeyboardRow(
-			tu.InlineKeyboardButton("Profile").
-				WithWebApp(tu.WebAppInfo(profileURL)),
-		),
-	)
+func Profile(ctx context.Context, bot *telego.Bot, chatID int64) error {
+	return bot.SetChatMenuButton(ctx, &telego.SetChatMenuButtonParams{
+		ChatID: chatID,
+		MenuButton: &telego.MenuButtonWebApp{
+			Type: telego.ButtonTypeWebApp,
+			Text: "Profile",
+			WebApp: telego.WebAppInfo{
+				URL: profileURL,
+			},
+		},
+	})
 }

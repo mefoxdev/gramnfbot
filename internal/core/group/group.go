@@ -12,7 +12,25 @@ import (
 	tu "github.com/mymmrac/telego/telegoutil"
 )
 
-func HandleRules(ctx *th.Context, message telego.Message) error {
+func HandleError(
+	ctx *th.Context, id int64,
+	message telego.Message,
+) error {
+
+	text := fmt.Sprintf("errors: ", id)
+	params := tu.Message(
+		tu.ID(message.Chat.ID),
+		text,
+	)
+
+	_, err := ctx.Bot().SendMessage(ctx, params)
+	return err
+}
+
+func HandleRules(
+	ctx *th.Context,
+	message telego.Message,
+) error {
 	text := ""
 	if rule.IsFozz(message.Chat.ID) {
 		text = info.FozzRules

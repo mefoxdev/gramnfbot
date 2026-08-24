@@ -27,6 +27,7 @@ func main() {
 				telego.MessageUpdates,
 				telego.CallbackQueryUpdates,
 				telego.ChatMemberUpdates,
+				telego.ChatJoinRequestUpdates,
 			},
 		},
 	)

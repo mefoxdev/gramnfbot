@@ -26,7 +26,6 @@ func Register(bh *th.BotHandler) {
 		th.CommandEqual("rules"),
 		groupChat,
 	)
-
 	bh.HandleChatMember(group.HandleJoin)
 }
 

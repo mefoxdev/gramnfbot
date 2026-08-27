@@ -16,7 +16,6 @@ func HandleError(
 	ctx *th.Context, id int64,
 	message telego.Message,
 ) error {
-
 	text := fmt.Sprintf("errors: ", id)
 	params := tu.Message(
 		tu.ID(message.Chat.ID),

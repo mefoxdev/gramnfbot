@@ -1,6 +1,6 @@
 module github.com/mefoxtrot/meNFlubot
 
-go 1.26.5
+go 1.26
 
 require (
 	github.com/joho/godotenv v1.5.1
@@ -16,6 +16,7 @@ require (
 	github.com/grbit/go-json v0.11.0 // indirect
 	github.com/klauspost/compress v1.18.6 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
+	github.com/mefoxtrot/nfproto v0.0.0-20260825084441-6b4fbf170b4c // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.72.0 // indirect

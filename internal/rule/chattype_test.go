@@ -3,7 +3,7 @@ package rule_test
 import (
 	"testing"
 
-	"github.com/mefoxtrot/meNFlubot/internal/rule"
+	"github.com/mefoxtrot/gramnfbot/internal/rule"
 )
 
 func TestIsDirect(t *testing.T) {

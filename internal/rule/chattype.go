@@ -1,7 +1,7 @@
 package rule
 
 import (
-	"github.com/mefoxtrot/meNFlubot/internal/info"
+	"github.com/mefoxtrot/gramnfbot/internal/info"
 	"github.com/mymmrac/telego"
 )
 

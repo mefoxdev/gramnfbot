@@ -1,8 +1,10 @@
 package group
 
-import "fmt"
+import "log/slog"
 
-func Captcha(TGID model.User) bool {
-	fmt.Println("user join request:", TGID)
+func Captcha(
+	TGID int64,
+) bool {
+	slog.Debug("captcha request", "user_id", TGID)
 	return true
 }

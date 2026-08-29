@@ -1,4 +1,4 @@
-module github.com/mefoxtrot/meNFlubot
+module github.com/mefoxtrot/gramnfbot
 
 go 1.26
 

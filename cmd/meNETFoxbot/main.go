@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/mefoxtrot/meNFlubot/internal/router"
+	"github.com/mefoxtrot/gramnfbot/internal/router"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 )

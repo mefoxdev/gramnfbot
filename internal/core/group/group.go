@@ -5,8 +5,8 @@ import (
 	"html"
 	"log/slog"
 
-	"github.com/mefoxtrot/meNFlubot/internal/info"
-	"github.com/mefoxtrot/meNFlubot/internal/rule"
+	"github.com/mefoxtrot/gramnfbot/internal/info"
+	"github.com/mefoxtrot/gramnfbot/internal/rule"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 	tu "github.com/mymmrac/telego/telegoutil"
@@ -31,6 +31,7 @@ func HandleRules(
 	message telego.Message,
 ) error {
 	text := ""
+
 	if rule.IsFozz(message.Chat.ID) {
 		text = info.FozzRules
 	} else if rule.IsFoss(message.Chat.ID) {
@@ -47,7 +48,10 @@ func HandleRules(
 	return err
 }
 
-func HandleJoin(ctx *th.Context, update telego.ChatMemberUpdated) error {
+func HandleJoin(
+	ctx *th.Context,
+	update telego.ChatMemberUpdated,
+) error {
 	wasMember := update.OldChatMember.MemberIsMember()
 	isMember := update.NewChatMember.MemberIsMember()
 
@@ -59,6 +63,7 @@ func HandleJoin(ctx *th.Context, update telego.ChatMemberUpdated) error {
 		user.ID,
 		html.EscapeString(user.FirstName),
 	)
+
 	text := fmt.Sprintf(`
 Добро пожаловать в %s, %s!
 прочитай правила, и можешь начать общаться ^^
@@ -83,6 +88,63 @@ func HandleJoin(ctx *th.Context, update telego.ChatMemberUpdated) error {
 	)
 
 	_, err := ctx.Bot().SendMessage(ctx, params)
+
+	return err
+}
+
+func HandleChatJoinRequest(ctx *th.Context, update telego.ChatJoinRequest) error {
+	slog.Info("user send chat join request",
+		"chat_id", update.Chat.ID,
+		"user_id", update.From.ID,
+		"username", "@"+update.From.Username,
+	)
+
+	captcha := Captcha(update.From.ID)
+	if captcha {
+		ApproveJoinRequest(ctx, update)
+	} else {
+		DeclineJoinRequest(ctx, update)
+	}
+
+	return nil
+}
+
+func ApproveJoinRequest(ctx *th.Context, request telego.ChatJoinRequest) error {
+	bot := ctx.Bot()
+	err := bot.ApproveChatJoinRequest(ctx, &telego.ApproveChatJoinRequestParams{
+		ChatID: telego.ChatID{ID: request.Chat.ID},
+		UserID: request.From.ID,
+	})
+
+	if err != nil {
+		return err
+	}
+
+	slog.Info("approved chat join request",
+		"chat_id", request.Chat.ID,
+		"user_id", request.From.ID,
+		"username", "@"+request.From.Username,
+	)
+
+	return err
+}
+
+func DeclineJoinRequest(ctx *th.Context, request telego.ChatJoinRequest) error {
+	bot := ctx.Bot()
+	err := bot.DeclineChatJoinRequest(ctx, &telego.DeclineChatJoinRequestParams{
+		ChatID: telego.ChatID{ID: request.Chat.ID},
+		UserID: request.From.ID,
+	})
+
+	if err != nil {
+		return err
+	}
+
+	slog.Info("declined chat join request",
+		"chat_id", request.Chat.ID,
+		"user_id", request.From.ID,
+		"username", "@"+request.From.Username,
+	)
 
 	return err
 }

@@ -3,8 +3,8 @@ package router
 import (
 	"context"
 
-	"github.com/mefoxtrot/meNFlubot/internal/core/direct"
-	"github.com/mefoxtrot/meNFlubot/internal/core/group"
+	"github.com/mefoxtrot/gramnfbot/internal/core/direct"
+	"github.com/mefoxtrot/gramnfbot/internal/core/group"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 )
@@ -27,6 +27,8 @@ func Register(bh *th.BotHandler) {
 		groupChat,
 	)
 	bh.HandleChatMember(group.HandleJoin)
+
+	bh.HandleChatJoinRequest(group.HandleChatJoinRequest)
 }
 
 // Direct
